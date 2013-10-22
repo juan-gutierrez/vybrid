@@ -1,0 +1,56 @@
+/*
+ * Linker Script
+*/
+
+OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
+OUTPUT_ARCH(arm)
+ENTRY(startup)
+
+MEMORY
+{
+/*    IRAM (rwx) : ORIGIN = 0x00908000, LENGTH = 64K */
+	DDR  (rwx) : ORIGIN = 0x12000000, LENGTH = 200M
+}
+
+SECTIONS
+{
+    .vectors :
+    {
+        __vectors_start = .;
+        *o(.vectors)
+        __vectors_end = .;
+    }>DDR
+
+    .text :
+    {
+        . = ALIGN (4);
+        *(.text .text.*)
+    }
+
+    .data :
+    {
+		*(.data .rdata .init_array .fini_array .jcr)
+		__image_end__ = .;
+	}
+
+    .bss :
+    {
+        . = ALIGN (4);
+        __bss_start__ = .;
+        *(.shbss)
+        *(.bss .bss.* .gnu.linkonce.b.*)
+        *(COMMON)
+        __bss_end__ = .;
+    }
+
+    . = ALIGN (4);
+    . += 20K;
+
+    top_of_stacks = .;
+    . = ALIGN (4);
+    . += 8;
+    free_memory_start = .;
+
+    _end = .;
+    __end = _end;
+}
