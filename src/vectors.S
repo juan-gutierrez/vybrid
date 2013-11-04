@@ -2,7 +2,7 @@
 #include "asm_defines.h"
 #include "soc_memory_map.h"
 
-#define IMAGE_ENTRY_ADDR 0x12000000
+#define IMAGE_ENTRY_ADDR 0x3f000000
 #define IMAGE_SIZE 8*1024
 
 #define CPU_2_BE_32(l) \
@@ -19,9 +19,9 @@ dcd_node_##i:                        \
     .code 32
     .section ".vectors","ax"
 
-	.ascii "MX6QD ARD WEIM NOR test image"
+	.ascii "Vybrid OCRAM test image"
 
-	.org 0x1000
+	.org 0x400
 
 	ivt2_header:            .long 0x402000D1
 	app2_code_jump_v:       .long startup
@@ -39,18 +39,10 @@ dcd_node_##i:                        \
 	/* DCD header defined here */
 	DCD_HEADER
 
+	.org 0x800
 	.global startup
 
 startup:
-
-	/* enable AIPS zone */
-    ldr r0, =AIPS1_BASE_ADDR
-    ldr r1, =0x77777777
-    str r1, [r0, #0x00]
-    str r1, [r0, #0x04]
-    ldr r0, =AIPS2_BASE_ADDR
-    str r1, [r0, #0x00]
-    str r1, [r0, #0x04]
 
 	/* setup stack */
     ldr     r0, =top_of_stacks

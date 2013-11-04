@@ -8,8 +8,8 @@ ENTRY(startup)
 
 MEMORY
 {
-/*    IRAM (rwx) : ORIGIN = 0x00908000, LENGTH = 64K */
-	DDR  (rwx) : ORIGIN = 0x12000000, LENGTH = 200M
+	IRAM (rwx) : ORIGIN = 0x3F000000, LENGTH = 256K
+/*	DDR  (rwx) : ORIGIN = 0x80000000, LENGTH = 200M */
 }
 
 SECTIONS
@@ -19,7 +19,7 @@ SECTIONS
         __vectors_start = .;
         *o(.vectors)
         __vectors_end = .;
-    }>DDR
+    }>IRAM
 
     .text :
     {

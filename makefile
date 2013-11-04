@@ -7,7 +7,7 @@ OBJDUMP = arm-none-eabi-objdump
 C_DEFINES =
 C_INCLUDES = -Ihdr
 
-BUILD_OBJ = arik_ard_test
+BUILD_OBJ = vybrid_test
 TARGET_ELF = $(BUILD_OBJ).elf
 TARGET_BIN = $(BUILD_OBJ).img
 TARGET_MAP = $(BUILD_OBJ).map
@@ -15,7 +15,7 @@ TARGET_ASM = $(BUILD_OBJ).asm
 
 # flags
 L_FLAGS = -T linker_script
-C_FLAGS = -mcpu=cortex-a9 -Wall -Wpointer-arith -Wstrict-prototypes -Winline -Wundef  -mapcs -ffunction-sections -fdata-sections -fno-exceptions -O0
+C_FLAGS = -mcpu=cortex-a5 -Wall -Wpointer-arith -Wstrict-prototypes -Winline -Wundef  -mapcs -ffunction-sections -fdata-sections -fno-exceptions -O0
 
 .PHONY: target clean
 
